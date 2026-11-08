@@ -1,0 +1,55 @@
+name: Sims
+# Public repo = free unlimited Actions minutes. 16 machines run HQ's trading simulations in parallel (paper maths, public price data, no keys).
+# Code is copied in from the private HQ repo by its server (deploy/sims_sync.sh); results are copied back the same way.
+on:
+  schedule: [{cron: "23 */6 * * *"}]   # every 6h on fresh data
+  push: {paths: ["trading/**.py", ".github/workflows/sims.yml"]}
+  workflow_dispatch:
+permissions: {contents: write}
+concurrency: {group: sims, cancel-in-progress: true}
+jobs:
+  data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: cd trading && python -c "import sweep; sweep.load(730); sweep.s_load(200)"
+      - uses: actions/upload-artifact@v4
+        with: {name: data, path: trading/data, retention-days: 1}
+  run:
+    needs: data
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix: {suite: [confluence, smart], shard: [0, 1, 2, 3, 4, 5, 6, 7]}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - uses: actions/download-artifact@v4
+        with: {name: data, path: trading/data}
+      - run: cd trading && mkdir -p results && SHARD="${{ matrix.shard }}/8" python sweep.py ${{ matrix.suite }}
+      - uses: actions/upload-artifact@v4
+        with: {name: "part-${{ matrix.suite }}-${{ matrix.shard }}", path: trading/results/part_*.json, retention-days: 1}
+  merge:
+    needs: run
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - uses: actions/download-artifact@v4
+        with: {name: data, path: trading/data}
+      - uses: actions/download-artifact@v4
+        with: {pattern: "part-*", path: trading/results, merge-multiple: true}
+      - run: cd trading && MERGE=1 SIM_HOST="16 free GitHub machines (public hq-sims repo)" python sweep.py all
+      - run: |
+          rm -f trading/results/part_*.json
+          git config user.name "hq-sims"; git config user.email "hq-sims@users.noreply.github.com"
+          git add trading/results
+          git diff --cached --quiet || (git commit -qm "sims: results" && for i in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 5; done)
