@@ -179,11 +179,11 @@ def write(rows, stress, days, n_combos, secs):
         cfg = C.BOOKS[n]
         cu = cfg["cur"]
         good = [(p, r) for p, r in rows if passes(r[n], n)]
-        robust = [(p, r) for p, r in good
-                  if stress.get(json.dumps(p, sort_keys=True), {}).get(n, {}).get("pnl", 1) > 0]
+        tested = [(p, r) for p, r in good if n in stress.get(json.dumps(p, sort_keys=True), {})]
+        robust = [(p, r) for p, r in tested if stress[json.dumps(p, sort_keys=True)][n]["pnl"] > 0]
         ranked = sorted(good, key=lambda pr: score(pr[1][n]), reverse=True)[:8]
         L += [f"## {n} ({cu}{cfg['start']:.0f} start)",
-              f"{len(good)} of {len(rows)} settings make money in both halves; {len(robust)} of the stress-tested top ones survive 2x fees."]
+              f"{len(good)} of {len(rows)} settings make money in both halves; {len(robust)} of {len(tested)} stress-tested top ones survive 2x fees."]
         if cur:
             c = cur[n]
             L.append(f"Current setting: P&L {cu}{c['pnl']:+.0f} (train {c['train']:+.0f}, test {c['test']:+.0f}), "
