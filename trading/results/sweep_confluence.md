@@ -1,13 +1,13 @@
 # CONFLUENCE sweep: 1728 settings x 3 books, last 730 days of 1h bars
-Updated 2026-11-09 22:37 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-03-11, test = after. 'Passes' = both halves make money; '2x fees' column = same setting with double fees (the top ones only).
+Updated 2026-11-10 07:36 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-03-11, test = after. 'Passes' = both halves make money; '2x fees' column = same setting with double fees (the top ones only).
 
 ## pionex (£200 start)
-1 of 1728 settings make money in both halves; 0 of 1 stress-tested top ones survive 2x fees.
-Current setting: P&L £-116 (train -116, test +0), 41 trades, worst month £-169
+1 of 1728 settings make money in both halves; 1 of 1 stress-tested top ones survive 2x fees.
+Current setting: P&L £-112 (train -112, test +0), 41 trades, worst month £-192
 
 | setting | P&L | train | test | trades | win% | per month | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|---|
-| stop 2.5ATR, target 8.0R, time 120h, window 8, trend on, zone 30/70 | +425 | +415 | +9 | 629 | 25% | +17 | -508 | 10/25 | 79% | -127 |
+| stop 2.5ATR, target 8.0R, time 120h, window 8, trend on, zone 30/70 | +737 | +728 | +9 | 627 | 26% | +30 | -508 | 10/25 | 60% | +191 |
 
 ## pionex_majors (£200 start)
 220 of 1728 settings make money in both halves; 4 of 6 stress-tested top ones survive 2x fees.
@@ -25,7 +25,7 @@ Current setting: P&L £+562 (train +400, test +162), 117 trades, worst month £-
 | stop 1.5ATR, target 8.0R, time 48h, window 3, trend on, zone 30/70 | +991 | +824 | +167 | 113 | 31% | +40 | -156 | 15/25 | 36% | - |
 
 ## funded ($10000 start)
-579 of 1728 settings make money in both halves; 10 of 11 stress-tested top ones survive 2x fees.
+579 of 1728 settings make money in both halves; 11 of 12 stress-tested top ones survive 2x fees.
 Current setting: P&L $+2807 (train +1997, test +810), 117 trades, worst month $-700, 3 passes / 1 fails
 
 | setting | P&L | train | test | trades | win% | per month | worst month | months up | max DD | 2x fees | pass/fail |
