@@ -1,5 +1,5 @@
 # SMART sweep: 1296 settings, last 200 days (Hyperliquid 1h/4h + real funding, £200 per book)
-Updated 2026-11-12 20:13 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-09-07, test = after. '2x fees' = same setting with double fees.
+Updated 2026-11-12 22:09 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-09-07, test = after. '2x fees' = same setting with double fees.
 
 ## trend_lewis
 0 of 3 distinct settings make money in both halves.
@@ -36,7 +36,7 @@ Current: P&L £+50 (train +55, test -6), 137 trades, worst month £-12
 
 ## movers_lewis
 0 of 3 distinct settings make money in both halves.
-Current: P&L £+56 (train +135, test -79), 358 trades, worst month £-110
+Current: P&L £+56 (train +139, test -84), 358 trades, worst month £-110
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
@@ -44,7 +44,7 @@ Current: P&L £+56 (train +135, test -79), 358 trades, worst month £-110
 
 ## movers_pro
 0 of 3 distinct settings make money in both halves.
-Current: P&L £+29 (train +44, test -15), 357 trades, worst month £-20
+Current: P&L £+29 (train +45, test -15), 357 trades, worst month £-20
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
