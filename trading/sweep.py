@@ -106,6 +106,8 @@ def metrics(name, bk):
 
 
 def run(params, fee_mult=1.0):
+    for n in C.BOOKS:  # the sweep tests one setting on every book, so drop per-book overrides
+        C.BOOKS[n].pop("p", None)
     for k, v in params.items():
         setattr(C, k, v)
     C.FEE = 0.0005 * fee_mult

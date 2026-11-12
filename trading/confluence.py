@@ -33,6 +33,14 @@ BOOKS = {
                "max_open": 2, "coins": ["BTC", "ETH"],
                "target": 0.10, "daily": 0.05, "maxloss": 0.10, "day_lock": 0.025, "min_days": 4},
 }
+# Per-book settings (Lewis 12 Nov: "increase efficiency, we don't have a year"). Picked from results/sweep_confluence.md
+# (730 days, profitable in train AND test halves, survives 2x fees). Books without "p" use the globals above.
+BOOKS["funded"]["p"] = {"STOP_ATR": 2.0, "TARGET_R": 4.0, "MAX_HOURS": 120, "WINDOW": 5, "TREND": False, "ZONE": 30}  # 9 pass/6 fail vs 3/1, ~2.5x the trades, max DD 23%
+BOOKS["pionex_majors"]["p"] = {"STOP_ATR": 2.0, "TARGET_R": 8.0, "MAX_HOURS": 48, "WINDOW": 3, "TREND": True, "ZONE": 30}  # +£885 vs +£598, 15/24 months up
+
+def P(name, key):
+    """Setting for one book: its own override, else the global (sweep.py sets the globals)."""
+    return BOOKS[name].get("p", {}).get(key, globals()[key])
 
 # ---------------- data + indicators ----------------
 
@@ -114,8 +122,11 @@ def features(b):
     f["trend"] = [trend.get(x["t"] // 14400 - 1, 0) for x in b]  # previous (closed) 4h block only
     return f
 
-def signal(b, f, i):
-    """+1 long / -1 short / 0. Uses bars up to and including i only."""
+def signal(b, f, i, window=None, trend=None, zone=None):
+    """+1 long / -1 short / 0. Uses bars up to and including i only. None = global setting."""
+    WINDOW = globals()["WINDOW"] if window is None else window
+    TREND = globals()["TREND"] if trend is None else trend
+    ZONE = globals()["ZONE"] if zone is None else zone
     if i < 220 or f["k"][i] is None or f["d"][i - WINDOW] is None or f["sd"][i] is None:
         return 0
     for side in (1, -1):
@@ -167,7 +178,7 @@ def try_open(name, bk, coin, side, bar, atr, t, events):
     if name.startswith("pionex") and bk["cash"] <= cfg["kill"]:
         return
     entry = bar["c"]
-    stop_pct = STOP_ATR * atr / entry
+    stop_pct = P(name, "STOP_ATR") * atr / entry
     risk = cfg["risk"] if name.startswith("pionex") else cfg["risk_pct"] * bk["attempt_start"]
     notional = risk / (stop_pct + 2 * FEE)
     if name.startswith("pionex"):
@@ -184,7 +195,8 @@ def try_open(name, bk, coin, side, bar, atr, t, events):
         margin, lev = notional / cfg["max_lev"], cfg["max_lev"]
     p = {"coin": coin, "side": side, "t": t, "entry": entry, "notional": round(notional, 2), "margin": round(margin, 2),
          "lev": round(lev, 1), "stop": entry * (1 - side * stop_pct),
-         "target": entry * (1 + side * stop_pct * TARGET_R), "risk": round(notional * (stop_pct + 2 * FEE), 2)}
+         "target": entry * (1 + side * stop_pct * P(name, "TARGET_R")), "risk": round(notional * (stop_pct + 2 * FEE), 2),
+         "tr": P(name, "TARGET_R"), "max_h": P(name, "MAX_HOURS")}
     bk["open"].append(p)
     events.append(f"{name.upper()} OPEN {coin} {'LONG' if side > 0 else 'SHORT'} @ {entry:.6g} | stop {p['stop']:.6g} "
                   f"| target {p['target']:.6g} | {p['lev']}x, margin {cfg['cur']}{margin:.0f}, risk {cfg['cur']}{p['risk']:.2f}")
@@ -213,9 +225,9 @@ def manage(name, bk, coin, bar, events):
         if (s > 0 and bar["l"] <= p["stop"]) or (s < 0 and bar["h"] >= p["stop"]):
             close(name, bk, p, p["stop"], bar["t"] + 3600, "stop", events)
         elif (s > 0 and bar["h"] >= p["target"]) or (s < 0 and bar["l"] <= p["target"]):
-            close(name, bk, p, p["target"], bar["t"] + 3600, "target 3R", events)
-        elif bar["t"] + 3600 - p["t"] >= MAX_HOURS * 3600:
-            close(name, bk, p, bar["c"], bar["t"] + 3600, "48h time stop", events)
+            close(name, bk, p, p["target"], bar["t"] + 3600, f"target {p.get('tr', TARGET_R):g}R", events)
+        elif bar["t"] + 3600 - p["t"] >= p.get("max_h", MAX_HOURS) * 3600:
+            close(name, bk, p, bar["c"], bar["t"] + 3600, f"{p.get('max_h', MAX_HOURS)}h time stop", events)
 
 def prop_rules(bk, t, events, marks, name="funded"):
     """FTMO checks on equity (cash + floating), once per closed hour."""
@@ -257,15 +269,18 @@ def step(books, data, feats, t, wins, events):
         for name, bk in books.items():
             if coin in BOOKS[name]["coins"]:
                 manage(name, bk, coin, bar, events)
-        side = signal(b, f, i)
-        if side:
-            why = blocked(t + 3600, wins)
-            if why:
-                events.append(f"SKIP {coin}: high-impact news ({why})")
+        why = None
+        for name, bk in books.items():
+            if coin not in BOOKS[name]["coins"]:
                 continue
-            for name, bk in books.items():
-                if coin in BOOKS[name]["coins"]:
-                    try_open(name, bk, coin, side, bar, f["atr"][i], t + 3600, events)
+            side = signal(b, f, i, P(name, "WINDOW"), P(name, "TREND"), P(name, "ZONE"))
+            if not side:
+                continue
+            why = why or blocked(t + 3600, wins)
+            if why:
+                events.append(f"SKIP {coin} {name}: high-impact news ({why})")
+                continue
+            try_open(name, bk, coin, side, bar, f["atr"][i], t + 3600, events)
     for name, bk in books.items():
         if name.startswith("funded"):
             prop_rules(bk, t + 3600, events, marks, name)
