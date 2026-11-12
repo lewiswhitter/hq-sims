@@ -36,6 +36,7 @@ BOOKS = {
 # Per-book settings (Lewis 12 Nov: "increase efficiency, we don't have a year"). Picked from results/sweep_confluence.md
 # (730 days, profitable in train AND test halves, survives 2x fees). Books without "p" use the globals above.
 BOOKS["funded"]["p"] = {"STOP_ATR": 2.0, "TARGET_R": 4.0, "MAX_HOURS": 120, "WINDOW": 5, "TREND": False, "ZONE": 30}  # 9 pass/6 fail vs 3/1, ~2.5x the trades, max DD 23%
+BOOKS["funded"].update(press=1.5, press_cap=2.0)  # Lewis 12 Nov "capitalise on winners": risk 1% -> 1.5% after a win -> 2% cap; back to 1% after a loss. 730d: 10 pass/4 fail vs 9/6, better in BOTH halves. Flip-on-opposite-signal tested worse (7/5): left off.
 BOOKS["pionex_majors"]["p"] = {"STOP_ATR": 2.0, "TARGET_R": 8.0, "MAX_HOURS": 48, "WINDOW": 3, "TREND": True, "ZONE": 30}  # +£885 vs +£598, 15/24 months up
 
 def P(name, key):
@@ -180,6 +181,10 @@ def try_open(name, bk, coin, side, bar, atr, t, events):
     entry = bar["c"]
     stop_pct = P(name, "STOP_ATR") * atr / entry
     risk = cfg["risk"] if name.startswith("pionex") else cfg["risk_pct"] * bk["attempt_start"]
+    if cfg.get("press"):  # Lewis 12 Nov: press winners: size up after a win, back to base after a loss
+        last = [x for x in bk["closed"] if x["coin"] in cfg["coins"]][-1:]
+        streak = bk.get("streak", 0) if last and last[0]["pnl"] > 0 else 0
+        risk *= min(cfg["press"] ** streak, cfg.get("press_cap", 2.0))
     notional = risk / (stop_pct + 2 * FEE)
     if name.startswith("pionex"):
         free = bk["cash"] - sum(p["margin"] for p in bk["open"])
@@ -213,6 +218,7 @@ def close(name, bk, p, px, t, why, events):
           "entry": round(p["entry"], 6), "exit": round(px, 6), "lev": p["lev"], "pnl": round(pnl, 2), "why": why,
           "balance": round(bk["cash"], 2)}
     bk["closed"].append(tr)
+    bk["streak"] = bk.get("streak", 0) + 1 if pnl > 0 else 0
     d = day_of(p["t"])
     if d not in bk["days_traded"]:
         bk["days_traded"].append(d)
@@ -276,6 +282,9 @@ def step(books, data, feats, t, wins, events):
             side = signal(b, f, i, P(name, "WINDOW"), P(name, "TREND"), P(name, "ZONE"))
             if not side:
                 continue
+            if BOOKS[name].get("flip"):  # Lewis 12 Nov: flip on an opposite signal instead of waiting for stop/target
+                for p in [q for q in bk["open"] if q["coin"] == coin and q["side"] == -side]:
+                    close(name, bk, p, bar["c"], t + 3600, "flip", events)
             why = why or blocked(t + 3600, wins)
             if why:
                 events.append(f"SKIP {coin} {name}: high-impact news ({why})")
