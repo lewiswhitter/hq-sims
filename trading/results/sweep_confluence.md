@@ -1,5 +1,5 @@
 # CONFLUENCE sweep: 1728 settings x 3 books, last 730 days of 1h bars
-Updated 2026-11-13 07:04 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-03-14, test = after. 'Passes' = both halves make money; '2x fees' column = same setting with double fees (the top ones only).
+Updated 2026-11-13 20:00 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-03-15, test = after. 'Passes' = both halves make money; '2x fees' column = same setting with double fees (the top ones only).
 
 ## pionex (£200 start)
 1 of 1728 settings make money in both halves; 0 of 1 stress-tested top ones survive 2x fees.
