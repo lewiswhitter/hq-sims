@@ -24,6 +24,11 @@ PAIRS = {"BTC": "XBTUSD", "ETH": "ETHUSD", "SOL": "SOLUSD", "XRP": "XRPUSD", "DO
 FEE = 0.0005          # per side on notional (Pionex futures taker 0.05%; FTMO crypto commission is lower)
 STOP_ATR, TARGET_R, MAX_HOURS, WINDOW = 1.5, 3.0, 48, 3
 TREND, ZONE = True, 30  # 4h EMA50 filter on/off; Stoch RSI extreme zone (30 = cross up from <30 / down from >70). sweep.py varies these.
+# CONFLUENCE PRO add-ons (14 Nov, tested 730d BTC+ETH in both halves + 2x fees; off by default so sweep.py/old books are unchanged):
+BAND = False       # skip longs just under the 80h (20 x 4h candles) high / shorts just above its low, within BAND_ATR x ATR; breakouts allowed
+BAND_ATR = 0.75
+BTCG = False       # ETH only trades the same way as BTC's 1h EMA9/21 (BTC = the big-coin guide)
+TRAIL_ARM_R, TRAIL_R = 0, 0  # late trailing stop: once +TRAIL_ARM_R in profit, stop trails TRAIL_R behind the best price (0 = off)
 BOOKS = {
     "pionex": {"start": 200.0, "cur": "£", "risk": 20.0, "max_lev": 40, "margin_pct": 0.30, "max_open": 3,
                "coins": list(PAIRS), "kill": 100.0},
@@ -35,9 +40,13 @@ BOOKS = {
 }
 # Per-book settings (Lewis 12 Nov: "increase efficiency, we don't have a year"). Picked from results/sweep_confluence.md
 # (730 days, profitable in train AND test halves, survives 2x fees). Books without "p" use the globals above.
-BOOKS["funded"]["p"] = {"STOP_ATR": 2.0, "TARGET_R": 4.0, "MAX_HOURS": 120, "WINDOW": 5, "TREND": False, "ZONE": 30}  # 9 pass/6 fail vs 3/1, ~2.5x the trades, max DD 23%
+BOOKS["funded"]["p"] = {"STOP_ATR": 2.0, "TARGET_R": 4.0, "MAX_HOURS": 120, "WINDOW": 5, "TREND": False, "ZONE": 30,
+                        "BAND": True, "BTCG": True}  # PRO 14 Nov: 9 pass/3 fail (75%) vs 10/4, worst month -$1,008 vs -$1,400  # 9 pass/6 fail vs 3/1, ~2.5x the trades, max DD 23%
 BOOKS["funded"].update(press=1.5, press_cap=2.0)  # Lewis 12 Nov "capitalise on winners": risk 1% -> 1.5% after a win -> 2% cap; back to 1% after a loss. 730d: 10 pass/4 fail vs 9/6, better in BOTH halves. Flip-on-opposite-signal tested worse (7/5): left off.
-BOOKS["pionex_majors"]["p"] = {"STOP_ATR": 2.0, "TARGET_R": 8.0, "MAX_HOURS": 48, "WINDOW": 3, "TREND": True, "ZONE": 30}  # +£885 vs +£598, 15/24 months up
+BOOKS["pionex_majors"]["p"] = {"STOP_ATR": 2.0, "TARGET_R": 8.0, "MAX_HOURS": 48, "WINDOW": 3, "TREND": True, "ZONE": 30,
+                               "BAND": True, "BTCG": True, "TRAIL_ARM_R": 4.0, "TRAIL_R": 2.0}
+# PRO 14 Nov: band+BTC guard = +£929 vs +£885, max DD 28% vs 45%, worst month -£100 vs -£140. Late trail (Lewis's trailing-stop rule)
+# costs ~£70 over 2 years; tighter trails (arm 1-2R) cut the 8R winners and lost £300+, so only the late one is used.  # +£885 vs +£598, 15/24 months up
 
 def P(name, key):
     """Setting for one book: its own override, else the global (sweep.py sets the globals)."""
@@ -121,7 +130,26 @@ def features(b):
     e4 = ema([blocks[k][-1]["c"] for k in keys], 50)
     trend = {k: (1 if blocks[k][-1]["c"] > e4[j] else -1) if j >= 50 else 0 for j, k in enumerate(keys)}
     f["trend"] = [trend.get(x["t"] // 14400 - 1, 0) for x in b]  # previous (closed) 4h block only
+    f["hh"] = [max(x["h"] for x in b[max(0, i - 80):i]) if i else None for i in range(len(b))]  # 80h band, closed bars only
+    f["ll"] = [min(x["l"] for x in b[max(0, i - 80):i]) if i else None for i in range(len(b))]
     return f
+
+def guard(b, f, i, side, band=True, btc=None, band_atr=None):
+    """PRO filters on a confluence signal. Returns a reason to skip, or None.
+    band: no long within band_atr x ATR under the 80h high, no short just above the 80h low (a breakout past it is fine).
+    btc: (btc_features, btc_index) for ETH: skip if BTC's 1h EMA9/21 points the other way."""
+    ba = BAND_ATR if band_atr is None else band_atr
+    atr, c = f["atr"][i], b[i]["c"]
+    if band and f["hh"][i] is not None:
+        if side > 0 and 0 <= f["hh"][i] - c < ba * atr:
+            return "just under the 80h high"
+        if side < 0 and 0 <= c - f["ll"][i] < ba * atr:
+            return "just above the 80h low"
+    if btc:
+        bf, j = btc
+        if j is None or side * (bf["e9"][j] - bf["e21"][j]) < 0:
+            return "against BTC"
+    return None
 
 def signal(b, f, i, window=None, trend=None, zone=None):
     """+1 long / -1 short / 0. Uses bars up to and including i only. None = global setting."""
@@ -225,6 +253,21 @@ def close(name, bk, p, px, t, why, events):
     events.append(f"{name.upper()} CLOSE {p['coin']} {why}: {'+' if pnl >= 0 else '-'}{cfg['cur']}{abs(pnl):.2f} "
                   f"| balance {cfg['cur']}{bk['cash']:.2f}")
 
+def late_trail(p, hi, lo, arm_r, trail_r):
+    """Late trailing stop: once the best price is arm_r x the first stop distance in profit, stop trails trail_r behind it.
+    Only tightens. Uses the bar's high/low; applied after this bar's exits, so it counts from the next bar."""
+    if not arm_r:
+        return p["stop"]
+    s = p["side"]
+    p.setdefault("stop0", p["stop"])
+    r = abs(p["entry"] - p["stop0"])
+    best = hi if s > 0 else lo
+    if r and s * (best - p["entry"]) >= arm_r * r:
+        new = best - s * trail_r * r
+        if s * (new - p["stop"]) > 0:
+            p["stop"] = new
+    return p["stop"]
+
 def manage(name, bk, coin, bar, events):
     for p in [q for q in bk["open"] if q["coin"] == coin]:
         s = p["side"]
@@ -234,6 +277,8 @@ def manage(name, bk, coin, bar, events):
             close(name, bk, p, p["target"], bar["t"] + 3600, f"target {p.get('tr', TARGET_R):g}R", events)
         elif bar["t"] + 3600 - p["t"] >= p.get("max_h", MAX_HOURS) * 3600:
             close(name, bk, p, bar["c"], bar["t"] + 3600, f"{p.get('max_h', MAX_HOURS)}h time stop", events)
+        else:
+            late_trail(p, bar["h"], bar["l"], P(name, "TRAIL_ARM_R"), P(name, "TRAIL_R"))
 
 def prop_rules(bk, t, events, marks, name="funded"):
     """FTMO checks on equity (cash + floating), once per closed hour."""
@@ -280,6 +325,12 @@ def step(books, data, feats, t, wins, events):
             if coin not in BOOKS[name]["coins"]:
                 continue
             side = signal(b, f, i, P(name, "WINDOW"), P(name, "TREND"), P(name, "ZONE"))
+            if side:
+                g = guard(b, f, i, side, P(name, "BAND"),
+                          (feats["BTC"], feats["BTC"]["idx"].get(t)) if P(name, "BTCG") and coin != "BTC" and "BTC" in feats else None)
+                if g:
+                    events.append(f"SKIP {coin} {name}: {g}")
+                    side = 0
             if not side:
                 continue
             if BOOKS[name].get("flip"):  # Lewis 12 Nov: flip on an opposite signal instead of waiting for stop/target
