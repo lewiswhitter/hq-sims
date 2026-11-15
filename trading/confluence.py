@@ -405,6 +405,15 @@ def summary(name, bk):
 
 def write_md(books, title, path):
     lines = [f"# {title}", f"Updated {datetime.now(timezone.utc):%Y-%m-%d %H:%M} UTC. Paper only.", ""]
+    oos = RES / "oos.md"  # 15 Nov: anyone judging these books for real money must see the out-of-sample verdict first
+    if oos.exists():
+        book, verdicts = "", []
+        for l in oos.read_text().splitlines():
+            book = l[3:] if l.startswith("## ") else book
+            if l.startswith("**Verdict"):
+                verdicts.append(f"{book} {l.replace('**', '')[9:]}")
+        lines += ["**Out-of-sample gate (oos.md: these exact settings on 2018-2024, years they were never tuned on): "
+                  + " | ".join(verdicts) + " Rule: no real money increase and no challenge fee until this passes.**", ""]
     lines += ["- " + summary(n, bk) for n, bk in books.items()] + [""]
     for n, bk in books.items():
         lines += [f"## {n} last 15 trades", "| open | coin | side | lev | P&L | why |", "|---|---|---|---|---|---|"]
