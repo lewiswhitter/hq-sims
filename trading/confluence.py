@@ -42,6 +42,9 @@ BOOKS = {
 # (730 days, profitable in train AND test halves, survives 2x fees). Books without "p" use the globals above.
 BOOKS["funded"]["p"] = {"STOP_ATR": 2.0, "TARGET_R": 4.0, "MAX_HOURS": 120, "WINDOW": 5, "TREND": False, "ZONE": 30,
                         "BAND": True, "BTCG": True}  # PRO 14 Nov: 9 pass/3 fail (75%) vs 10/4, worst month -$1,008 vs -$1,400  # 9 pass/6 fail vs 3/1, ~2.5x the trades, max DD 23%
+BOOKS["funded"]["limit"] = True  # Lewis 15 Nov: limit entry at the signal close (0.02% maker fee), filled only if the next hour trades
+# LIMIT_THROUGH past it, else missed. reality.py 730d with funding + slippage: 7 pass/4 fail -> 7/3, +$870, better in both halves (max DD 16% -> 20%). Same in the MT5 EA.
+MAKER, LIMIT_THROUGH = 0.0002, 0.0005
 BOOKS["funded"].update(press=1.5, press_cap=2.0)  # Lewis 12 Nov "capitalise on winners": risk 1% -> 1.5% after a win -> 2% cap; back to 1% after a loss. 730d: 10 pass/4 fail vs 9/6, better in BOTH halves. Flip-on-opposite-signal tested worse (7/5): left off.
 BOOKS["pionex_majors"]["p"] = {"STOP_ATR": 2.0, "TARGET_R": 8.0, "MAX_HOURS": 48, "WINDOW": 3, "TREND": True, "ZONE": 30,
                                "BAND": True, "BTCG": True, "TRAIL_ARM_R": 4.0, "TRAIL_R": 2.0}
@@ -198,7 +201,7 @@ def new_book(name):
 def day_of(t):
     return datetime.fromtimestamp(t, timezone.utc).strftime("%Y-%m-%d")
 
-def try_open(name, bk, coin, side, bar, atr, t, events):
+def try_open(name, bk, coin, side, bar, atr, t, events, fee_in=None):
     cfg = BOOKS[name]
     if len(bk["open"]) >= cfg["max_open"] or any(p["coin"] == coin for p in bk["open"]):
         return
@@ -230,6 +233,8 @@ def try_open(name, bk, coin, side, bar, atr, t, events):
          "lev": round(lev, 1), "stop": entry * (1 - side * stop_pct),
          "target": entry * (1 + side * stop_pct * P(name, "TARGET_R")), "risk": round(notional * (stop_pct + 2 * FEE), 2),
          "tr": P(name, "TARGET_R"), "max_h": P(name, "MAX_HOURS")}
+    if fee_in is not None:
+        p["fee_in"] = fee_in
     bk["open"].append(p)
     events.append(f"{name.upper()} OPEN {coin} {'LONG' if side > 0 else 'SHORT'} @ {entry:.6g} | stop {p['stop']:.6g} "
                   f"| target {p['target']:.6g} | {p['lev']}x, margin {cfg['cur']}{margin:.0f}, risk {cfg['cur']}{p['risk']:.2f}")
@@ -237,7 +242,7 @@ def try_open(name, bk, coin, side, bar, atr, t, events):
 def close(name, bk, p, px, t, why, events):
     cfg = BOOKS[name]
     move = p["side"] * (px - p["entry"]) / p["entry"]
-    pnl = p["notional"] * move - p["notional"] * FEE * 2  # fee in + fee out
+    pnl = p["notional"] * move - p["notional"] * (p.get("fee_in", FEE) + FEE)  # fee in (maker if a limit filled) + fee out
     bk["cash"] += pnl
     bk["open"].remove(p)
     tr = {"book": name, "attempt": bk["attempt"], "coin": p["coin"], "side": "long" if p["side"] > 0 else "short",
@@ -317,6 +322,14 @@ def step(books, data, feats, t, wins, events):
             continue
         bar, f = b[i], feats[coin]
         marks[coin] = bar["c"]
+        for name, bk in books.items():  # limit entries placed last hour: filled only if this hour trades through them
+            for q in [q for q in bk.get("pending", []) if q["coin"] == coin]:
+                bk["pending"].remove(q)
+                px = q["bar"]["c"] * (1 - q["side"] * LIMIT_THROUGH)
+                if q["t"] == bar["t"] and (bar["l"] <= px if q["side"] > 0 else bar["h"] >= px):
+                    try_open(name, bk, coin, q["side"], q["bar"], q["atr"], q["t"], events, fee_in=MAKER)
+                else:
+                    events.append(f"{name.upper()} LIMIT {coin} not filled (price ran away), no trade")
         for name, bk in books.items():
             if coin in BOOKS[name]["coins"]:
                 manage(name, bk, coin, bar, events)
@@ -339,6 +352,12 @@ def step(books, data, feats, t, wins, events):
             why = why or blocked(t + 3600, wins)
             if why:
                 events.append(f"SKIP {coin} {name}: high-impact news ({why})")
+                continue
+            if BOOKS[name].get("limit"):
+                if len(bk["open"]) + len(bk.get("pending", [])) < BOOKS[name]["max_open"] and \
+                        not any(q["coin"] == coin for q in bk["open"] + bk.get("pending", [])):
+                    bk.setdefault("pending", []).append({"coin": coin, "side": side, "bar": bar, "atr": f["atr"][i], "t": t + 3600})
+                    events.append(f"{name.upper()} LIMIT {coin} {'LONG' if side > 0 else 'SHORT'} @ {bar['c']:.6g} (fills if the next hour trades through)")
                 continue
             try_open(name, bk, coin, side, bar, f["atr"][i], t + 3600, events)
     for name, bk in books.items():
