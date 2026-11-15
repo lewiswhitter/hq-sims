@@ -1,55 +1,55 @@
 # SMART sweep: 1296 settings, last 200 days (Hyperliquid 1h/4h + real funding, £200 per book)
-Updated 2026-11-15 14:39 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-09-09, test = after. '2x fees' = same setting with double fees.
+Updated 2026-11-15 19:07 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-09-10, test = after. '2x fees' = same setting with double fees.
 
 ## trend_lewis
-0 of 3 distinct settings make money in both halves.
-Current: P&L £-52 (train +0, test -53), 125 trades, worst month £-59
+1 of 3 distinct settings make money in both halves.
+Current: P&L £+76 (train +129, test -53), 124 trades, worst month £-59
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
-| none pass | | | | | | | | | |
+| target 3.0R | +28 | +22 | +5 | 110 | 29% | -67 | 3/7 | 41% | +40 |
 
 ## trend_pro
 0 of 3 distinct settings make money in both halves.
-Current: P&L £+2 (train +12, test -10), 116 trades, worst month £-11
+Current: P&L £+4 (train +14, test -11), 115 trades, worst month £-11
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
 | none pass | | | | | | | | | |
 
 ## bbsq_lewis
-20 of 144 distinct settings make money in both halves.
+25 of 144 distinct settings make money in both halves.
 Current: P&L £+238 (train +232, test +6), 133 trades, worst month £-25
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
+| stop 1.0ATR, target 6.0R, time 240h, squeeze 6 bars | +134 | +92 | +42 | 128 | 21% | -27 | 4/7 | 34% | +86 |
 | stop 1.0ATR, target 3.0R, time 48h, squeeze 3 bars | +240 | +212 | +28 | 221 | 36% | -87 | 3/7 | 31% | +192 |
 | stop 1.0ATR, target 3.0R, time 120h, squeeze 3 bars | +243 | +215 | +28 | 204 | 32% | -79 | 3/7 | 32% | +147 |
-| stop 1.0ATR, target 6.0R, time 240h, squeeze 6 bars | +112 | +92 | +20 | 127 | 20% | -27 | 4/7 | 34% | +64 |
+| stop 2.0ATR, target 2.0R, time 240h, squeeze 6 bars | +150 | +129 | +21 | 102 | 45% | -21 | 4/7 | 24% | +123 |
 | stop 1.0ATR, target 4.0R, time 48h, squeeze 3 bars | +287 | +271 | +16 | 211 | 34% | -97 | 4/7 | 29% | +209 |
-| stop 2.0ATR, target 2.0R, time 240h, squeeze 6 bars | +150 | +134 | +16 | 102 | 45% | -21 | 4/7 | 24% | +123 |
 | stop 1.5ATR, target 4.0R, time 240h, squeeze 6 bars | +153 | +139 | +15 | 106 | 28% | -31 | 3/7 | 33% | +124 |
 
 ## bbsq_pro
-13 of 144 distinct settings make money in both halves.
+14 of 144 distinct settings make money in both halves.
 Current: P&L £+58 (train +57, test +1), 133 trades, worst month £-9
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
+| stop 1.0ATR, target 6.0R, time 240h, squeeze 6 bars | +38 | +31 | +6 | 128 | 21% | -15 | 4/7 | 13% | +13 |
 | stop 1.0ATR, target 3.0R, time 48h, squeeze 3 bars | +88 | +83 | +5 | 221 | 36% | -28 | 4/7 | 15% | +61 |
 | stop 1.0ATR, target 3.0R, time 120h, squeeze 3 bars | +26 | +22 | +4 | 204 | 32% | -20 | 3/7 | 15% | +28 |
-| stop 1.0ATR, target 6.0R, time 240h, squeeze 6 bars | +34 | +31 | +3 | 127 | 20% | -15 | 4/7 | 13% | +9 |
 | stop 1.0ATR, target 4.0R, time 48h, squeeze 3 bars | +62 | +59 | +2 | 211 | 34% | -28 | 4/7 | 15% | +64 |
 | stop 1.5ATR, target 4.0R, time 240h, squeeze 6 bars | +20 | +18 | +2 | 106 | 28% | -9 | 4/7 | 12% | -1 |
 | stop 1.0ATR, target 3.0R, time 120h, squeeze 6 bars | +58 | +56 | +2 | 164 | 34% | -12 | 4/7 | 12% | +49 |
 
 ## movers_lewis
-1 of 3 distinct settings make money in both halves.
+0 of 3 distinct settings make money in both halves.
 Current: P&L £-12 (train +62, test -73), 365 trades, worst month £-110
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
-| 24h move 5% | +442 | +439 | +3 | 590 | 41% | -25 | 5/7 | 21% | +308 |
+| none pass | | | | | | | | | |
 
 ## movers_pro
 0 of 3 distinct settings make money in both halves.
