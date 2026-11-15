@@ -28,6 +28,7 @@ TREND, ZONE = True, 30  # 4h EMA50 filter on/off; Stoch RSI extreme zone (30 = c
 BAND = False       # skip longs just under the 80h (20 x 4h candles) high / shorts just above its low, within BAND_ATR x ATR; breakouts allowed
 BAND_ATR = 0.75
 BTCG = False       # ETH only trades the same way as BTC's 1h EMA9/21 (BTC = the big-coin guide)
+PRETRADE = None   # live() sets "shadow": pretrade.py replays each trade on similar past charts first (15 Nov). None in backtests/sweeps.
 TRAIL_ARM_R, TRAIL_R = 0, 0  # late trailing stop: once +TRAIL_ARM_R in profit, stop trails TRAIL_R behind the best price (0 = off)
 BOOKS = {
     "pionex": {"start": 200.0, "cur": "£", "risk": 20.0, "max_lev": 40, "margin_pct": 0.30, "max_open": 3,
@@ -340,7 +341,17 @@ def step(books, data, feats, t, wins, events):
             if why:
                 events.append(f"SKIP {coin} {name}: high-impact news ({why})")
                 continue
+            tag = ""
+            if PRETRADE and name in ("pionex_majors", "funded"):  # Lewis 15 Nov: simulate on similar past set-ups/charts first
+                import pretrade
+                ok, tag = pretrade.gate(f"confluence:{name}", coin, side, name, PRETRADE, bar["t"])
+                if not ok:
+                    events.append(f"SKIP {coin} {name}: {tag}")
+                    continue
+            n0 = len(events)
             try_open(name, bk, coin, side, bar, f["atr"][i], t + 3600, events)
+            if tag and len(events) > n0:
+                events[-1] += "\n  " + tag
     for name, bk in books.items():
         if name.startswith("funded"):
             prop_rules(bk, t + 3600, events, marks, name)
@@ -355,11 +366,17 @@ def load(days=0):
 
 # ---------------- outputs ----------------
 
+def _quiet(text=""):  # Lewis: don't disturb 00:00-08:00 UK unless urgent (starts with 🚨) -> send silently, no buzz
+    from datetime import datetime as _dt
+    from zoneinfo import ZoneInfo
+    return _dt.now(ZoneInfo("Europe/London")).hour < 8 and not str(text).startswith("\U0001f6a8")
+
+
 def telegram(text):
     tok, chat = os.environ.get("TELEGRAM_TOKEN"), os.environ.get("OWNER_CHAT_ID")
     if tok and chat:
         try:
-            data = urllib.parse.urlencode({"chat_id": chat, "text": text}).encode()
+            data = urllib.parse.urlencode({"chat_id": chat, "text": text, "disable_notification": str(_quiet(text)).lower()}).encode()
             urllib.request.urlopen(f"https://api.telegram.org/bot{tok}/sendMessage", data, timeout=30)
             return
         except Exception as e:
@@ -418,6 +435,8 @@ def live():
         st["books"].setdefault(n, new_book(n))
     books, events = st["books"], []
     wins = news_windows()
+    global PRETRADE
+    PRETRADE = json.loads((HERE / "pots.json").read_text()).get("pretrade", {}).get("confluence", "shadow")
     for t in times:
         if t > st["last"]:
             step(books, data, feats, t, wins, events)
