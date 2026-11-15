@@ -1,17 +1,18 @@
 # CONFLUENCE sweep: 1728 settings x 3 books, last 730 days of 1h bars
-Updated 2026-11-15 06:56 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-03-16, test = after. 'Passes' = both halves make money; '2x fees' column = same setting with double fees (the top ones only).
+Updated 2026-11-15 11:38 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-03-17, test = after. 'Passes' = both halves make money; '2x fees' column = same setting with double fees (the top ones only).
 
 ## pionex (£200 start)
-2 of 1728 settings make money in both halves; 0 of 2 stress-tested top ones survive 2x fees.
+3 of 1728 settings make money in both halves; 0 of 3 stress-tested top ones survive 2x fees.
 Current setting: P&L £-119 (train -119, test +0), 50 trades, worst month £-195
 
 | setting | P&L | train | test | trades | win% | per month | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|---|
-| stop 2.5ATR, target 2.0R, time 120h, window 8, trend off, zone 20/80 | +804 | +616 | +188 | 885 | 38% | +32 | -310 | 17/25 | 86% | -124 |
+| stop 2.5ATR, target 2.0R, time 120h, window 8, trend off, zone 30/70 | +1017 | +686 | +331 | 942 | 38% | +41 | -336 | 15/25 | 73% | -130 |
+| stop 2.5ATR, target 2.0R, time 120h, window 8, trend off, zone 20/80 | +792 | +604 | +188 | 885 | 38% | +32 | -310 | 17/25 | 85% | -112 |
 | stop 2.0ATR, target 1.5R, time 120h, window 2, trend off, zone 20/80 | +275 | +208 | +67 | 327 | 44% | +11 | -173 | 13/24 | 70% | -103 |
 
 ## pionex_majors (£200 start)
-306 of 1728 settings make money in both halves; 7 of 9 stress-tested top ones survive 2x fees.
+306 of 1728 settings make money in both halves; 6 of 8 stress-tested top ones survive 2x fees.
 Current setting: P&L £+598 (train +419, test +179), 117 trades, worst month £-140
 
 | setting | P&L | train | test | trades | win% | per month | worst month | months up | max DD | 2x fees |
@@ -26,7 +27,7 @@ Current setting: P&L £+598 (train +419, test +179), 117 trades, worst month £-
 | stop 2.5ATR, target 8.0R, time 24h, window 3, trend on, zone 30/70 | +702 | +406 | +295 | 111 | 45% | +28 | -113 | 14/25 | 40% | - |
 
 ## funded ($10000 start)
-737 of 1728 settings make money in both halves; 14 of 14 stress-tested top ones survive 2x fees.
+736 of 1728 settings make money in both halves; 13 of 13 stress-tested top ones survive 2x fees.
 Current setting: P&L $+2808 (train +1867, test +941), 117 trades, worst month $-750, 3 passes / 1 fails
 
 | setting | P&L | train | test | trades | win% | per month | worst month | months up | max DD | 2x fees | pass/fail |
