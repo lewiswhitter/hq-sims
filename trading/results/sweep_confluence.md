@@ -1,5 +1,5 @@
 # CONFLUENCE sweep: 1728 settings x 3 books, last 730 days of 1h bars
-Updated 2026-11-16 06:56 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-03-17, test = after. 'Passes' = both halves make money; '2x fees' column = same setting with double fees (the top ones only).
+Updated 2026-11-16 22:27 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-03-18, test = after. 'Passes' = both halves make money; '2x fees' column = same setting with double fees (the top ones only).
 
 ## pionex (£200 start)
 3 of 1728 settings make money in both halves; 0 of 3 stress-tested top ones survive 2x fees.
@@ -7,38 +7,38 @@ Current setting: P&L £-119 (train -119, test +0), 50 trades, worst month £-195
 
 | setting | P&L | train | test | trades | win% | per month | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|---|
-| stop 2.5ATR, target 2.0R, time 120h, window 8, trend off, zone 30/70 | +974 | +643 | +331 | 941 | 38% | +39 | -336 | 15/25 | 77% | -100 |
-| stop 2.5ATR, target 5.0R, time 120h, window 8, trend on, zone 30/70 | +737 | +618 | +118 | 646 | 27% | +29 | -480 | 13/25 | 81% | -101 |
-| stop 2.0ATR, target 1.5R, time 120h, window 2, trend off, zone 20/80 | +275 | +208 | +67 | 327 | 44% | +11 | -173 | 13/24 | 70% | -103 |
+| stop 2.5ATR, target 5.0R, time 120h, window 8, trend on, zone 30/70 | +717 | +558 | +158 | 647 | 27% | +29 | -480 | 13/25 | 81% | -101 |
+| stop 2.0ATR, target 1.5R, time 120h, window 2, trend off, zone 20/80 | +255 | +196 | +59 | 328 | 44% | +11 | -173 | 13/24 | 70% | -103 |
+| stop 2.5ATR, target 8.0R, time 120h, window 8, trend on, zone 30/70 | +499 | +449 | +50 | 622 | 26% | +20 | -508 | 10/25 | 87% | -120 |
 
 ## pionex_majors (£200 start)
-306 of 1728 settings make money in both halves; 5 of 7 stress-tested top ones survive 2x fees.
-Current setting: P&L £+598 (train +419, test +179), 117 trades, worst month £-140
+300 of 1728 settings make money in both halves; 7 of 8 stress-tested top ones survive 2x fees.
+Current setting: P&L £+578 (train +399, test +179), 118 trades, worst month £-140
 
 | setting | P&L | train | test | trades | win% | per month | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|---|
-| stop 2.0ATR, target 8.0R, time 48h, window 3, trend on, zone 30/70 | +885 | +592 | +293 | 104 | 37% | +37 | -140 | 15/24 | 45% | +655 |
-| stop 2.0ATR, target 5.0R, time 48h, window 3, trend on, zone 30/70 | +756 | +483 | +273 | 106 | 37% | +32 | -135 | 15/24 | 52% | +528 |
-| stop 2.0ATR, target 4.0R, time 48h, window 3, trend on, zone 30/70 | +753 | +530 | +224 | 106 | 38% | +31 | -136 | 15/24 | 50% | +531 |
-| stop 2.0ATR, target 8.0R, time 24h, window 3, trend on, zone 30/70 | +776 | +442 | +335 | 112 | 43% | +31 | -140 | 13/25 | 42% | +549 |
-| stop 2.0ATR, target 4.0R, time 48h, window 2, trend on, zone 30/70 | +739 | +434 | +304 | 65 | 43% | +32 | -66 | 13/23 | 52% | -114 |
-| stop 1.0ATR, target 8.0R, time 48h, window 3, trend on, zone 30/70 | +756 | +431 | +324 | 122 | 25% | +30 | -124 | 12/25 | 54% | - |
-| stop 1.0ATR, target 8.0R, time 120h, window 3, trend on, zone 30/70 | +692 | +414 | +278 | 113 | 21% | +28 | -147 | 11/25 | 55% | - |
-| stop 2.5ATR, target 8.0R, time 24h, window 3, trend on, zone 30/70 | +702 | +406 | +295 | 111 | 45% | +28 | -113 | 14/25 | 40% | - |
+| stop 2.0ATR, target 8.0R, time 48h, window 3, trend on, zone 30/70 | +865 | +572 | +293 | 105 | 36% | +36 | -140 | 15/24 | 45% | +635 |
+| stop 2.0ATR, target 5.0R, time 48h, window 3, trend on, zone 30/70 | +736 | +463 | +273 | 107 | 36% | +31 | -135 | 15/24 | 52% | +508 |
+| stop 2.0ATR, target 4.0R, time 48h, window 3, trend on, zone 30/70 | +733 | +510 | +224 | 107 | 37% | +31 | -136 | 15/24 | 50% | +511 |
+| stop 2.0ATR, target 8.0R, time 24h, window 3, trend on, zone 30/70 | +756 | +422 | +335 | 113 | 42% | +30 | -140 | 13/25 | 42% | +529 |
+| stop 2.0ATR, target 4.0R, time 48h, window 2, trend on, zone 30/70 | +719 | +414 | +304 | 66 | 42% | +31 | -66 | 13/23 | 52% | -114 |
+| stop 1.0ATR, target 8.0R, time 48h, window 3, trend on, zone 30/70 | +756 | +411 | +344 | 122 | 25% | +30 | -124 | 12/25 | 54% | - |
+| stop 1.0ATR, target 8.0R, time 120h, window 3, trend on, zone 30/70 | +692 | +394 | +298 | 113 | 21% | +28 | -147 | 11/25 | 55% | - |
+| stop 2.5ATR, target 8.0R, time 24h, window 3, trend on, zone 30/70 | +682 | +386 | +295 | 112 | 45% | +27 | -113 | 14/25 | 40% | - |
 
 ## funded ($10000 start)
-551 of 1728 settings make money in both halves; 10 of 10 stress-tested top ones survive 2x fees.
-Current setting: P&L $+2291 (train +1287, test +1004), 106 trades, worst month $-589, 2 passes / 1 fails
+529 of 1728 settings make money in both halves; 11 of 11 stress-tested top ones survive 2x fees.
+Current setting: P&L $+2094 (train +1189, test +905), 107 trades, worst month $-589, 2 passes / 1 fails
 
 | setting | P&L | train | test | trades | win% | per month | worst month | months up | max DD | 2x fees | pass/fail |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| stop 2.5ATR, target 3.0R, time 120h, window 5, trend off, zone 30/70 | +8949 | +5609 | +3339 | 269 | 36% | +373 | -1416 | 14/24 | 26% | +7375 | 10/4 |
-| stop 1.5ATR, target 5.0R, time 120h, window 5, trend off, zone 30/70 | +9567 | +5477 | +4090 | 337 | 26% | +383 | -1511 | 12/25 | 44% | +9407 | 13/8 |
-| stop 2.0ATR, target 4.0R, time 120h, window 3, trend off, zone 30/70 | +7277 | +4281 | +2996 | 173 | 31% | +291 | -780 | 13/25 | 24% | +5973 | 8/3 |
-| stop 3.0ATR, target 2.0R, time 120h, window 5, trend off, zone 30/70 | +6839 | +4802 | +2037 | 259 | 42% | +285 | -1299 | 16/24 | 17% | +5694 | 7/2 |
-| stop 1.5ATR, target 4.0R, time 120h, window 5, trend off, zone 30/70 | +6778 | +4044 | +2734 | 347 | 26% | +271 | -1511 | 14/25 | 26% | +5322 | 9/5 |
-| stop 4.0ATR, target 2.0R, time 120h, window 5, trend off, zone 30/70 | +6202 | +3982 | +2220 | 230 | 44% | +258 | -1009 | 16/24 | 16% | - | 6/2 |
-| stop 3.0ATR, target 3.0R, time 120h, window 5, trend off, zone 30/70 | +6598 | +3920 | +2678 | 246 | 37% | +275 | -1299 | 14/24 | 26% | - | 8/5 |
-| stop 2.0ATR, target 4.0R, time 120h, window 5, trend off, zone 30/70 | +8038 | +3639 | +4399 | 294 | 29% | +335 | -1541 | 13/24 | 29% | - | 8/4 |
+| stop 2.5ATR, target 3.0R, time 120h, window 5, trend off, zone 30/70 | +8750 | +5462 | +3289 | 270 | 36% | +365 | -1416 | 14/24 | 26% | +7180 | 10/4 |
+| stop 1.5ATR, target 5.0R, time 120h, window 5, trend off, zone 30/70 | +9370 | +5282 | +4088 | 338 | 25% | +375 | -1511 | 12/25 | 44% | +9214 | 13/8 |
+| stop 3.0ATR, target 2.0R, time 120h, window 5, trend off, zone 30/70 | +6839 | +4654 | +2185 | 259 | 42% | +285 | -1299 | 16/24 | 17% | +5694 | 7/2 |
+| stop 2.0ATR, target 4.0R, time 120h, window 3, trend off, zone 30/70 | +7079 | +4183 | +2896 | 174 | 31% | +283 | -780 | 13/25 | 24% | +5779 | 8/3 |
+| stop 4.0ATR, target 2.0R, time 120h, window 5, trend off, zone 30/70 | +6202 | +3982 | +2220 | 230 | 44% | +258 | -1009 | 16/24 | 16% | +5276 | 6/2 |
+| stop 1.5ATR, target 4.0R, time 120h, window 5, trend off, zone 30/70 | +6581 | +3849 | +2732 | 348 | 26% | +263 | -1511 | 14/25 | 26% | - | 9/5 |
+| stop 3.0ATR, target 3.0R, time 120h, window 5, trend off, zone 30/70 | +6598 | +3771 | +2826 | 246 | 37% | +275 | -1299 | 14/24 | 26% | - | 8/5 |
+| stop 2.0ATR, target 3.0R, time 120h, window 5, trend off, zone 30/70 | +5936 | +4184 | +1752 | 305 | 31% | +247 | -1202 | 12/24 | 21% | - | 11/7 |
 
 Next: Claude picks the best robust setting per book for the 16 Nov review (research/ftmo-pionex-frameworks.md). Nothing changes in the live paper bots until Lewis says yes.
