@@ -1,0 +1,53 @@
+name: Moves
+# 115,200 big-move scenarios (follow/fade breaks of recent highs/lows, 10 coins, 2 years of 1m data, 3-period overfit check).
+# Paper maths on public price data, no keys. Code synced from private HQ (deploy/sims_sync.sh); results copied back the same way.
+on:
+  schedule: [{cron: "41 4 * * 0"}]   # Sundays on fresh data
+  push: {paths: ["trading/moves_sim.py", ".github/workflows/moves.yml"]}
+  workflow_dispatch:
+permissions: {contents: write}
+concurrency: {group: moves, cancel-in-progress: true}
+jobs:
+  data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -q numpy && cd trading && python moves_sim.py data 24 | grep -v '^skip' && ls data/moves | wc -l
+      - uses: actions/upload-artifact@v4
+        with: {name: moves-data, path: trading/data/moves, retention-days: 1}
+  run:
+    needs: data
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix: {shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - uses: actions/download-artifact@v4
+        with: {name: moves-data, path: trading/data/moves}
+      - run: pip install -q numpy && cd trading && mkdir -p results && SHARD="${{ matrix.shard }}/10" python moves_sim.py run | tail -3
+      - uses: actions/upload-artifact@v4
+        with: {name: "moves-part-${{ matrix.shard }}", path: trading/results/part_moves_*.json, retention-days: 1}
+  merge:
+    needs: run
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - uses: actions/download-artifact@v4
+        with: {pattern: "moves-part-*", path: trading/results, merge-multiple: true}
+      - run: pip install -q numpy && cd trading && python moves_sim.py merge
+      - run: |
+          rm -f trading/results/part_moves_*.json
+          git config user.name "hq-sims"; git config user.email "hq-sims@users.noreply.github.com"
+          git add trading/results/moves_sim.md trading/results/moves_top.csv
+          git diff --cached --quiet || (git commit -qm "sims: big-move scenarios" && for i in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 5; done)
