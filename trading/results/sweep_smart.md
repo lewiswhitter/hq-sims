@@ -1,21 +1,21 @@
 # SMART sweep: 1296 settings, last 200 days (Hyperliquid 1h/4h + real funding, £200 per book)
-Updated 2026-11-18 07:51 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-09-12, test = after. '2x fees' = same setting with double fees.
+Updated 2026-11-18 09:38 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-09-12, test = after. '2x fees' = same setting with double fees.
 
 ## trend_lewis
 1 of 3 distinct settings make money in both halves.
-Current: P&L £+275 (train +305, test -31), 123 trades, worst month £-59
+Current: P&L £+275 (train +300, test -26), 123 trades, worst month £-59
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
-| target 3.0R | +99 | +72 | +27 | 106 | 29% | -69 | 3/7 | 32% | +80 |
+| target 3.0R | +99 | +67 | +32 | 106 | 29% | -69 | 3/7 | 32% | +80 |
 
 ## trend_pro
 1 of 3 distinct settings make money in both halves.
-Current: P&L £+39 (train +46, test -7), 114 trades, worst month £-13
+Current: P&L £+39 (train +45, test -6), 114 trades, worst month £-13
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
-| target 3.0R | +14 | +14 | +0 | 101 | 30% | -16 | 3/7 | 10% | +3 |
+| target 3.0R | +14 | +13 | +1 | 101 | 30% | -16 | 3/7 | 10% | +3 |
 
 ## bbsq_lewis
 26 of 144 distinct settings make money in both halves.

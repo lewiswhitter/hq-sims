@@ -1,5 +1,5 @@
 # CONFLUENCE sweep: 1728 settings x 3 books, last 730 days of 1h bars
-Updated 2026-11-18 07:51 UTC on 16 free GitHub machines (public hq-sims repo) in 1 min. Paper maths only. Train = before 2026-03-19, test = after. 'Passes' = both halves make money; '2x fees' column = same setting with double fees (the top ones only).
+Updated 2026-11-18 09:38 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-03-20, test = after. 'Passes' = both halves make money; '2x fees' column = same setting with double fees (the top ones only).
 
 ## pionex (£200 start)
 3 of 1728 settings make money in both halves; 0 of 3 stress-tested top ones survive 2x fees.
@@ -9,7 +9,7 @@ Current setting: P&L £-119 (train -119, test +0), 50 trades, worst month £-195
 |---|---|---|---|---|---|---|---|---|---|---|
 | stop 2.5ATR, target 8.0R, time 120h, window 8, trend on, zone 30/70 | +735 | +448 | +287 | 626 | 26% | +31 | -508 | 10/24 | 85% | -140 |
 | stop 2.5ATR, target 5.0R, time 120h, window 8, trend on, zone 30/70 | +763 | +625 | +138 | 649 | 27% | +31 | -480 | 13/25 | 78% | -153 |
-| stop 4.0ATR, target 5.0R, time 120h, window 8, trend off, zone 30/70 | +416 | +276 | +141 | 537 | 39% | +17 | -256 | 12/25 | 79% | -131 |
+| stop 4.0ATR, target 5.0R, time 120h, window 8, trend off, zone 30/70 | +396 | +276 | +121 | 538 | 39% | +16 | -256 | 12/25 | 79% | -131 |
 
 ## pionex_majors (£200 start)
 300 of 1728 settings make money in both halves; 5 of 6 stress-tested top ones survive 2x fees.
