@@ -16,6 +16,8 @@ import numpy as np
 from numpy.lib.stride_tricks import sliding_window_view as swv
 
 COINS = ["BTC", "ETH", "SOL", "XRP", "DOGE", "BNB", "ADA", "AVAX", "LINK", "SUI"]
+if os.environ.get("UNIVERSE") == "50":  # 50-coin universe from tools/expand_simulation_universe.py
+    COINS = json.load(open(Path(__file__).parent / "universe.json"))["coins"]
 BARS, LOOK, VOLX, MODE = [1, 3, 5, 15, 30, 60], [12, 24, 48, 96, 192, 288], [0, 1.5, 2, 3, 5], ["follow", "fade"]
 ENTRY, STOP_K, TP_R, TRAIL, HOLD = ["market", "limit"], [0.5, 1, 1.5, 2, 3], [0, 1, 2, 3], [0, 1], [6, 12, 48, 144]
 TAKER, MAKER, COOL, HMAX, CHUNK = 0.00045 + 0.0002, 0.00015, 6, 144, 40_000
