@@ -374,10 +374,10 @@ def load(days=0):
 
 # ---------------- outputs ----------------
 
-def _quiet(text=""):  # Lewis: don't disturb 00:00-08:00 UK unless urgent (starts with 🚨) -> send silently, no buzz
+def _quiet(text=""):  # Lewis: don't disturb 22:00-08:00 UK (his sleep, audit 21 Nov) unless urgent (starts with 🚨) -> send silently, no buzz
     from datetime import datetime as _dt
     from zoneinfo import ZoneInfo
-    return _dt.now(ZoneInfo("Europe/London")).hour < 8 and not str(text).startswith("\U0001f6a8")
+    return _dt.now(ZoneInfo("Europe/London")).hour not in range(8, 22) and not str(text).startswith("\U0001f6a8")
 
 
 def telegram(text):
