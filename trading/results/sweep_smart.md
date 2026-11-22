@@ -1,9 +1,9 @@
 # SMART sweep: 1296 settings, last 200 days (Hyperliquid 1h/4h + real funding, £200 per book)
-Updated 2026-11-22 07:15 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-09-16, test = after. '2x fees' = same setting with double fees.
+Updated 2026-11-22 19:58 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-09-17, test = after. '2x fees' = same setting with double fees.
 
 ## trend_lewis
 0 of 3 distinct settings make money in both halves.
-Current: P&L £-12 (train -3, test -8), 119 trades, worst month £-59
+Current: P&L £-18 (train -15, test -3), 123 trades, worst month £-59
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
@@ -11,50 +11,50 @@ Current: P&L £-12 (train -3, test -8), 119 trades, worst month £-59
 
 ## trend_pro
 0 of 3 distinct settings make money in both halves.
-Current: P&L £+4 (train +6, test -2), 110 trades, worst month £-11
+Current: P&L £+6 (train +8, test -2), 114 trades, worst month £-11
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
 | none pass | | | | | | | | | |
 
 ## bbsq_lewis
-69 of 144 distinct settings make money in both halves.
-Current: P&L £+264 (train +230, test +34), 132 trades, worst month £-25
+50 of 144 distinct settings make money in both halves.
+Current: P&L £+206 (train +172, test +34), 131 trades, worst month £-60
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
-| stop 1.0ATR, target 4.0R, time 48h, squeeze 3 bars | +323 | +254 | +68 | 212 | 36% | -97 | 5/7 | 30% | +185 |
-| stop 1.0ATR, target 3.0R, time 48h, squeeze 3 bars | +373 | +319 | +54 | 221 | 38% | -97 | 5/7 | 27% | +319 |
-| stop 1.0ATR, target 6.0R, time 240h, squeeze 6 bars | +164 | +99 | +66 | 127 | 21% | -27 | 4/7 | 33% | +130 |
-| stop 1.5ATR, target 4.0R, time 240h, squeeze 3 bars | +195 | +148 | +47 | 116 | 31% | -31 | 4/7 | 30% | +111 |
-| stop 2.0ATR, target 2.0R, time 240h, squeeze 6 bars | +173 | +133 | +40 | 101 | 46% | -22 | 4/7 | 27% | +134 |
-| stop 2.0ATR, target 6.0R, time 240h, squeeze 6 bars | +238 | +198 | +40 | 75 | 33% | -16 | 6/7 | 22% | +219 |
+| stop 1.0ATR, target 4.0R, time 48h, squeeze 3 bars | +197 | +129 | +68 | 211 | 36% | -92 | 5/7 | 37% | +153 |
+| stop 1.0ATR, target 3.0R, time 48h, squeeze 3 bars | +334 | +276 | +58 | 221 | 38% | -87 | 5/7 | 28% | +275 |
+| stop 2.5ATR, target 4.0R, time 240h, squeeze 6 bars | +134 | +89 | +45 | 76 | 39% | -23 | 4/7 | 23% | +120 |
+| stop 1.0ATR, target 3.0R, time 120h, squeeze 3 bars | +256 | +214 | +42 | 203 | 33% | -79 | 3/7 | 36% | +155 |
+| stop 2.0ATR, target 2.0R, time 240h, squeeze 6 bars | +134 | +94 | +40 | 100 | 45% | -60 | 4/7 | 32% | +162 |
+| stop 2.5ATR, target 2.0R, time 48h, squeeze 6 bars | +230 | +191 | +39 | 133 | 51% | -17 | 5/7 | 20% | +199 |
 
 ## bbsq_pro
-50 of 144 distinct settings make money in both halves.
-Current: P&L £+59 (train +53, test +6), 132 trades, worst month £-9
+47 of 144 distinct settings make money in both halves.
+Current: P&L £+48 (train +42, test +6), 131 trades, worst month £-9
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
-| stop 1.0ATR, target 4.0R, time 48h, squeeze 3 bars | +72 | +60 | +13 | 212 | 36% | -28 | 5/7 | 15% | +75 |
-| stop 1.0ATR, target 3.0R, time 48h, squeeze 3 bars | +119 | +107 | +12 | 221 | 38% | -30 | 5/7 | 15% | +86 |
-| stop 1.0ATR, target 6.0R, time 240h, squeeze 6 bars | +41 | +30 | +11 | 127 | 21% | -15 | 4/7 | 13% | +16 |
-| stop 2.5ATR, target 2.0R, time 240h, squeeze 3 bars | +39 | +32 | +7 | 90 | 48% | -6 | 4/7 | 9% | +33 |
-| stop 1.0ATR, target 6.0R, time 48h, squeeze 3 bars | +89 | +81 | +7 | 208 | 36% | -24 | 4/7 | 13% | +90 |
-| stop 1.0ATR, target 3.0R, time 120h, squeeze 3 bars | +41 | +35 | +6 | 204 | 33% | -20 | 3/7 | 15% | +28 |
+| stop 1.0ATR, target 3.0R, time 48h, squeeze 3 bars | +106 | +93 | +12 | 221 | 38% | -29 | 5/7 | 15% | +90 |
+| stop 1.0ATR, target 4.0R, time 48h, squeeze 3 bars | +58 | +46 | +12 | 211 | 36% | -26 | 5/7 | 15% | +43 |
+| stop 1.0ATR, target 3.0R, time 120h, squeeze 3 bars | +45 | +38 | +7 | 203 | 33% | -21 | 3/7 | 15% | +31 |
+| stop 2.5ATR, target 2.0R, time 240h, squeeze 3 bars | +32 | +25 | +7 | 89 | 47% | -6 | 4/7 | 9% | +25 |
+| stop 1.0ATR, target 6.0R, time 48h, squeeze 3 bars | +85 | +78 | +7 | 208 | 36% | -24 | 4/7 | 13% | +52 |
+| stop 1.0ATR, target 6.0R, time 240h, squeeze 6 bars | +22 | +12 | +10 | 126 | 21% | -15 | 3/7 | 13% | +0 |
 
 ## movers_lewis
 1 of 3 distinct settings make money in both halves.
-Current: P&L £-2 (train +40, test -42), 366 trades, worst month £-110
+Current: P&L £-2 (train +38, test -41), 366 trades, worst month £-110
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
-| 24h move 5% | +217 | +211 | +6 | 595 | 40% | -25 | 4/7 | 27% | +75 |
+| 24h move 5% | +219 | +207 | +13 | 596 | 40% | -25 | 4/7 | 27% | +77 |
 
 ## movers_pro
-0 of 3 distinct settings make money in both halves.
+1 of 3 distinct settings make money in both halves.
 Current: P&L £+9 (train +16, test -7), 365 trades, worst month £-18
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
-| none pass | | | | | | | | | |
+| 24h move 5% | +37 | +37 | +0 | 595 | 40% | -5 | 4/7 | 13% | +18 |
