@@ -1,16 +1,17 @@
 # CONFLUENCE sweep: 1728 settings x 3 books, last 730 days of 1h bars
-Updated 2026-11-22 19:58 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-03-24, test = after. 'Passes' = both halves make money; '2x fees' column = same setting with double fees (the top ones only).
+Updated 2026-11-23 08:02 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-03-24, test = after. 'Passes' = both halves make money; '2x fees' column = same setting with double fees (the top ones only).
 
 ## pionex (£200 start)
-1 of 1728 settings make money in both halves; 0 of 1 stress-tested top ones survive 2x fees.
+2 of 1728 settings make money in both halves; 1 of 2 stress-tested top ones survive 2x fees.
 Current setting: P&L £-104 (train -104, test +0), 23 trades, worst month £-62
 
 | setting | P&L | train | test | trades | win% | per month | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|---|
+| stop 1.5ATR, target 8.0R, time 120h, window 8, trend off, zone 30/70 | +2980 | +2379 | +601 | 1056 | 20% | +124 | -364 | 13/24 | 60% | +1356 |
 | stop 4.0ATR, target 4.0R, time 120h, window 8, trend off, zone 30/70 | +329 | +120 | +209 | 532 | 39% | +14 | -256 | 14/24 | 82% | -137 |
 
 ## pionex_majors (£200 start)
-305 of 1728 settings make money in both halves; 9 of 9 stress-tested top ones survive 2x fees.
+304 of 1728 settings make money in both halves; 8 of 8 stress-tested top ones survive 2x fees.
 Current setting: P&L £+609 (train +287, test +321), 120 trades, worst month £-134
 
 | setting | P&L | train | test | trades | win% | per month | worst month | months up | max DD | 2x fees |
@@ -25,7 +26,7 @@ Current setting: P&L £+609 (train +287, test +321), 120 trades, worst month £-
 | stop 2.0ATR, target 8.0R, time 48h, window 3, trend on, zone 30/70 | +920 | +523 | +397 | 106 | 37% | +38 | -136 | 15/24 | 51% | - |
 
 ## funded ($10000 start)
-589 of 1728 settings make money in both halves; 12 of 12 stress-tested top ones survive 2x fees.
+589 of 1728 settings make money in both halves; 12 of 13 stress-tested top ones survive 2x fees.
 Current setting: P&L $+2658 (train +751, test +1907), 109 trades, worst month $-579, 2 passes / 0 fails
 
 | setting | P&L | train | test | trades | win% | per month | worst month | months up | max DD | 2x fees | pass/fail |
