@@ -1,5 +1,5 @@
 # CONFLUENCE sweep: 1728 settings x 3 books, last 730 days of 1h bars
-Updated 2026-11-24 22:44 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-03-26, test = after. 'Passes' = both halves make money; '2x fees' column = same setting with double fees (the top ones only).
+Updated 2026-11-25 09:00 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-03-27, test = after. 'Passes' = both halves make money; '2x fees' column = same setting with double fees (the top ones only).
 
 ## pionex (£200 start)
 1 of 1728 settings make money in both halves; 0 of 1 stress-tested top ones survive 2x fees.
@@ -10,7 +10,7 @@ Current setting: P&L £-104 (train -104, test +0), 23 trades, worst month £-62
 | stop 2.0ATR, target 1.5R, time 120h, window 2, trend off, zone 20/80 | +237 | +222 | +15 | 336 | 44% | +10 | -173 | 13/24 | 70% | -103 |
 
 ## pionex_majors (£200 start)
-303 of 1728 settings make money in both halves; 7 of 7 stress-tested top ones survive 2x fees.
+304 of 1728 settings make money in both halves; 9 of 9 stress-tested top ones survive 2x fees.
 Current setting: P&L £+609 (train +287, test +321), 120 trades, worst month £-134
 
 | setting | P&L | train | test | trades | win% | per month | worst month | months up | max DD | 2x fees |
@@ -25,18 +25,18 @@ Current setting: P&L £+609 (train +287, test +321), 120 trades, worst month £-
 | stop 2.0ATR, target 8.0R, time 48h, window 3, trend on, zone 30/70 | +920 | +523 | +397 | 106 | 37% | +38 | -136 | 15/24 | 51% | - |
 
 ## funded ($10000 start)
-592 of 1728 settings make money in both halves; 11 of 11 stress-tested top ones survive 2x fees.
+592 of 1728 settings make money in both halves; 13 of 13 stress-tested top ones survive 2x fees.
 Current setting: P&L $+2658 (train +751, test +1907), 109 trades, worst month $-579, 2 passes / 0 fails
 
 | setting | P&L | train | test | trades | win% | per month | worst month | months up | max DD | 2x fees | pass/fail |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | stop 1.5ATR, target 5.0R, time 120h, window 5, trend off, zone 30/70 | +12219 | +6478 | +5741 | 337 | 27% | +509 | -1315 | 12/24 | 35% | +10363 | 14/7 |
-| stop 2.5ATR, target 3.0R, time 120h, window 5, trend off, zone 30/70 | +9920 | +5291 | +4628 | 272 | 36% | +413 | -1297 | 14/24 | 25% | +8439 | 10/4 |
-| stop 3.0ATR, target 2.0R, time 120h, window 5, trend off, zone 30/70 | +8179 | +4549 | +3630 | 260 | 43% | +341 | -1105 | 16/24 | 15% | +6914 | 8/2 |
-| stop 2.5ATR, target 3.0R, time 120h, window 5, trend off, zone 20/80 | +7287 | +4546 | +2741 | 236 | 36% | +304 | -1002 | 15/24 | 20% | +5567 | 7/3 |
+| stop 2.5ATR, target 3.0R, time 120h, window 5, trend off, zone 30/70 | +9722 | +5291 | +4431 | 273 | 36% | +405 | -1297 | 14/24 | 25% | +8244 | 10/4 |
+| stop 3.0ATR, target 2.0R, time 120h, window 5, trend off, zone 30/70 | +7980 | +4549 | +3432 | 261 | 43% | +333 | -1105 | 16/24 | 15% | +6719 | 8/2 |
+| stop 2.5ATR, target 3.0R, time 120h, window 5, trend off, zone 20/80 | +7089 | +4546 | +2543 | 237 | 35% | +295 | -1002 | 15/24 | 20% | +5372 | 7/3 |
 | stop 2.0ATR, target 3.0R, time 120h, window 5, trend off, zone 30/70 | +7010 | +4130 | +2880 | 308 | 32% | +292 | -1053 | 11/24 | 20% | +5990 | 9/4 |
 | stop 2.0ATR, target 4.0R, time 120h, window 3, trend off, zone 30/70 | +8317 | +4007 | +4310 | 175 | 32% | +347 | -780 | 13/24 | 27% | - | 9/3 |
 | stop 1.5ATR, target 4.0R, time 120h, window 5, trend off, zone 30/70 | +7948 | +3937 | +4011 | 351 | 27% | +331 | -1315 | 14/24 | 22% | - | 10/5 |
-| stop 3.0ATR, target 3.0R, time 120h, window 5, trend off, zone 30/70 | +8016 | +3741 | +4275 | 246 | 38% | +334 | -1105 | 14/24 | 23% | - | 9/5 |
+| stop 3.0ATR, target 3.0R, time 120h, window 5, trend off, zone 30/70 | +7619 | +3741 | +3879 | 248 | 38% | +317 | -1105 | 14/24 | 23% | - | 9/5 |
 
 Next: Claude picks the best robust setting per book for the 16 Nov review (research/ftmo-pionex-frameworks.md). Nothing changes in the live paper bots until Lewis says yes.
