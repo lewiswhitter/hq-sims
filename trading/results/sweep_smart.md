@@ -1,9 +1,9 @@
 # SMART sweep: 1296 settings, last 200 days (Hyperliquid 1h/4h + real funding, £200 per book)
-Updated 2026-11-26 08:46 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-09-20, test = after. '2x fees' = same setting with double fees.
+Updated 2026-11-26 21:52 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-09-21, test = after. '2x fees' = same setting with double fees.
 
 ## trend_lewis
 0 of 3 distinct settings make money in both halves.
-Current: P&L £-28 (train -30, test +2), 119 trades, worst month £-44
+Current: P&L £-14 (train -16, test +2), 118 trades, worst month £-44
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
@@ -11,7 +11,7 @@ Current: P&L £-28 (train -30, test +2), 119 trades, worst month £-44
 
 ## trend_pro
 0 of 3 distinct settings make money in both halves.
-Current: P&L £-0 (train +0, test -1), 110 trades, worst month £-10
+Current: P&L £+6 (train +6, test -1), 109 trades, worst month £-11
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
@@ -45,7 +45,7 @@ Current: P&L £+77 (train +72, test +6), 129 trades, worst month £-10
 
 ## movers_lewis
 0 of 3 distinct settings make money in both halves.
-Current: P&L £-37 (train +80, test -117), 371 trades, worst month £-110
+Current: P&L £-100 (train -100, test +0), 133 trades, worst month £-55
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
@@ -53,7 +53,7 @@ Current: P&L £-37 (train +80, test -117), 371 trades, worst month £-110
 
 ## movers_pro
 0 of 3 distinct settings make money in both halves.
-Current: P&L £-0 (train +18, test -19), 370 trades, worst month £-17
+Current: P&L £-0 (train +19, test -19), 369 trades, worst month £-17
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
