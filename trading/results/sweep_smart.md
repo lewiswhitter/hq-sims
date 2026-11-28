@@ -1,21 +1,21 @@
 # SMART sweep: 1296 settings, last 200 days (Hyperliquid 1h/4h + real funding, £200 per book)
-Updated 2026-11-27 21:35 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-09-22, test = after. '2x fees' = same setting with double fees.
+Updated 2026-11-28 08:13 UTC on 16 free GitHub machines (public hq-sims repo) in 0 min. Paper maths only. Train = before 2026-09-22, test = after. '2x fees' = same setting with double fees.
 
 ## trend_lewis
-0 of 3 distinct settings make money in both halves.
-Current: P&L £-14 (train -7, test -8), 118 trades, worst month £-44
+1 of 3 distinct settings make money in both halves.
+Current: P&L £+16 (train +24, test -8), 116 trades, worst month £-59
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
-| none pass | | | | | | | | | |
+| target 3.0R | +42 | +2 | +40 | 97 | 29% | -67 | 3/7 | 38% | +15 |
 
 ## trend_pro
-0 of 3 distinct settings make money in both halves.
-Current: P&L £+6 (train +8, test -2), 109 trades, worst month £-11
+1 of 3 distinct settings make money in both halves.
+Current: P&L £+13 (train +16, test -2), 107 trades, worst month £-11
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
-| none pass | | | | | | | | | |
+| target 3.0R | +6 | +1 | +5 | 93 | 30% | -15 | 3/7 | 10% | +5 |
 
 ## bbsq_lewis
 37 of 144 distinct settings make money in both halves.
@@ -45,7 +45,7 @@ Current: P&L £+77 (train +72, test +6), 129 trades, worst month £-10
 
 ## movers_lewis
 0 of 3 distinct settings make money in both halves.
-Current: P&L £+59 (train +175, test -115), 369 trades, worst month £-110
+Current: P&L £+34 (train +154, test -120), 368 trades, worst month £-110
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
@@ -53,7 +53,7 @@ Current: P&L £+59 (train +175, test -115), 369 trades, worst month £-110
 
 ## movers_pro
 0 of 3 distinct settings make money in both halves.
-Current: P&L £+11 (train +30, test -19), 368 trades, worst month £-18
+Current: P&L £+14 (train +34, test -21), 367 trades, worst month £-18
 
 | setting | P&L | train | test | trades | win% | worst month | months up | max DD | 2x fees |
 |---|---|---|---|---|---|---|---|---|---|
